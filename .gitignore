@@ -1,3 +1,10 @@
 .pio
 .idea/editor.xml
 .idea/misc.xml
+.idea/Megaplexer.iml
+.idea/modules.xml
+.idea/vcs.xml
+.vscode/c_cpp_properties.json
+.vscode/extensions.json
+.vscode/launch.json
+cmake-build-debug/CMakeFiles/clion-Debug-log.txt

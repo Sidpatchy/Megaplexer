@@ -41,7 +41,7 @@
  */
 
 // Whether the displays used are common anode or cathode.
-#define IS_COMMON_ANODE false
+#define IS_COMMON_ANODE true
 
 #define NUM_DIGITS 6
 
@@ -70,8 +70,8 @@ int segmentPins[8] = {0, 1, 2, 4, 7, 8, 12, 13};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Store which character should be displayed on each digit.
-byte digitStates[6] = {0b00000010, 0b00000010, 0b00000010, 0b00000010, 0b00000010, 0b00000010};
-
+byte digitStates[6] = {0b01000000, 0b01000000, 0b01000000, 0b01000000, 0b01000000, 0b01000000};
+                    //  DPgfedcba
 /* I2C receive
  *
  * Byte 0: Digit index (0-5)
@@ -99,17 +99,17 @@ void requestEvent() {
 void updateDisplay(int digit) {
  // Turn off all common pins first to prevent ghosting
  for (int i = 0; i < NUM_DIGITS; i++) {
-  digitalWrite(commonPins[i], !IS_COMMON_ANODE);
+  digitalWrite(commonPins[i], IS_COMMON_ANODE);
  }
+
+ // Turn on current digit
+ digitalWrite(commonPins[digit], !IS_COMMON_ANODE);
 
  // Set segment pins
  for (int seg = 0; seg < 8; seg++) { // Includes DP
   bool segmentOn = digitStates[digit] & (1 << seg);
   digitalWrite(segmentPins[seg], IS_COMMON_ANODE ? !segmentOn : segmentOn);
  }
-
- // Turn on current digit
- digitalWrite(commonPins[digit], IS_COMMON_ANODE);
 }
 
 
