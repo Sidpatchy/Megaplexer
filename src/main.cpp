@@ -63,7 +63,7 @@ int segmentPins[8] = {0, 1, 2, 4, 7, 8, 12, 13};
  * You MUST modify the I2C_ADDRESS if using more than one multiplexer
  * in order to avoid conflicts.
  */
-#define I2C_ADDRESS 0x03
+#define I2C_ADDRESS 0x09
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                     END CONFIG                                                     //
@@ -129,6 +129,7 @@ void setup() {
  // Init I2C
  TWAR = I2C_ADDRESS;
  Wire.begin();
+ Wire.setClock(400000);
  Wire.onReceive(receiveEvent); // enable receive event
  //Wire.onRequest(requestEvent); // enable request event
 }
@@ -138,7 +139,7 @@ void loop() {
  if (millis() - lastUpdateTime > 2) { // Refresh display every 2 milliseconds
   for (int digit = 0; digit < NUM_DIGITS; digit++) {
    updateDisplay(digit); // Update display for each digit
-   delayMicroseconds(0); // Delay between digits to reduce flickering
+   delayMicroseconds(2); // Delay between digits to reduce flickering
   }
   lastUpdateTime = millis();
  }
